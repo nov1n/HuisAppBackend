@@ -46,6 +46,9 @@ http.Server(app).listen app.get('port'), ->
 # Database
 #
 
+User  = require('./models/user').User
+House = require('./models/house').House
+
 mongoose.connect "mongodb://localhost/#{DB_NAME}"
 db = mongoose.connection;
 db.on('error', (err) -> console.error("Could not connect to MongoDB: %s", err))
