@@ -1,0 +1,21 @@
+{
+  "name": "huis-app-backend",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "app.js"
+  },
+  "engines": {
+    "node": "0.10.31",
+    "npm": "1.1.x"
+  },
+  "dependencies": {
+    "coffee-script": "*",
+    "express": "3.0.0beta4",
+    "mongoose": "^3.8.20"
+  },
+  "devDependencies": {
+    "jasmine-node": "^1.14.5",
+    "mocha": "^2.0.1",
+    "supertest": "^0.15.0"
+  }
+}
