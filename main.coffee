@@ -53,6 +53,8 @@ mongoose.connect "mongodb://localhost/#{DB_NAME}"
 db = mongoose.connection;
 db.on('error', (err) -> console.error("Could not connect to MongoDB: %s", err))
 db.once('open', ->
+  console.log("Connected to: mongodb://localhost/#{DB_NAME}")
+
 
 )
 

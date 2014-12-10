@@ -1,6 +1,6 @@
 mongoose = require 'mongoose'
 
-UserSchema = new mongoose.Schema
+userSchema = new mongoose.Schema
   first_name:
     type: String
     index: true
@@ -11,8 +11,10 @@ UserSchema = new mongoose.Schema
     type: mongoose.Schema.Types.ObjectId
     index: true
 
+userSchema.methods.test = ->
+  console.log 'Function called on user model'
 
-Item = mongoose.model('User', UserSchema);
+User = mongoose.model('User', userSchema);
 
 module.exports =
   User: User
