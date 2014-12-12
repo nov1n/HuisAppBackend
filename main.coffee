@@ -1,39 +1,37 @@
 express = require 'express'
 http = require 'http'
-livereload = require 'express-livereload'
 mongoose = require 'mongoose'
+logger = require 'morgan'
 app = express()
 
 #
 # Configuration
 #
 
-DB_NAME = 'HUISAPP_DB'
-DB_USER = 'dev'
-DB_PWD  = 'urNmPZ7nARE2NB6eLLR'
+config = require './config/config'
 
-app.configure -> # use -p 8080 to run server on port 8080
-  port = 3000
-  if process.argv.indexOf('-p') >= 0
-    port = process.argv[process.argv.indexOf('-p') + 1]
+router = express.Router() # Not used
+app.use(logger('dev'));
 
-  app.set 'port', port
-  app.use express.logger('dev')
-  app.use app.router
+port = 3000
+if process.argv.indexOf('-p') >= 0
+  port = process.argv[process.argv.indexOf('-p') + 1]
+app.set('port', port)
 
-app.configure 'development', ->
-  app.use express.errorHandler()
+## Development only
+
+if process.env.NODE_ENV == 'development'
+  app.use(errorhandler()) # Returns full error stack trace to the client
 
 #
 # Allow cross-domain requests
 #
 
-app.all('*', (req, res, next) ->
+app.all '*', (req, res, next) ->
   res.header('Access-Control-Allow-Origin', '*')
   res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS')
   res.header('Access-Control-Allow-Headers', 'Content-Type')
   next()
-)
 
 #
 # Server
@@ -49,14 +47,12 @@ http.Server(app).listen app.get('port'), ->
 User  = require('./models/user').User
 House = require('./models/house').House
 
-mongoose.connect "mongodb://localhost/#{DB_NAME}"
-db = mongoose.connection;
-db.on('error', (err) -> console.error("Could not connect to MongoDB: %s", err))
-db.once('open', ->
-  console.log("Connected to: mongodb://localhost/#{DB_NAME}")
-
-
-)
+mongoose.connect "mongodb://localhost/#{config.db.dev.name}"
+db = mongoose.connection
+db.on 'error', (err) ->
+  console.error("Could not connect to MongoDB: %s", err)
+db.once 'open', ->
+  console.log("Connected to: mongodb://localhost/#{config.db.dev.name}")
 
 
 #
