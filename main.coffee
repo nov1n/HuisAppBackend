@@ -1,6 +1,6 @@
 express = require 'express'
-http = require 'http'
 mongoose = require 'mongoose'
+errorhandler = require 'errorhandler'
 logger = require 'morgan'
 app = express()
 
@@ -20,6 +20,8 @@ app.set('port', port)
 
 ## Development only
 
+process.env.NODE_ENV = 'development'
+
 if process.env.NODE_ENV == 'development'
   app.use(errorhandler()) # Returns full error stack trace to the client
 
@@ -37,7 +39,7 @@ app.all '*', (req, res, next) ->
 # Server
 #
 
-http.Server(app).listen app.get('port'), ->
+app.listen app.get('port'), ->
   console.log "Express server listening on port #{app.get 'port'} in #{app.settings.env} mode"
 
 #
