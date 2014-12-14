@@ -13,7 +13,7 @@ config = require './config/config'
 router = express.Router() # Not used
 app.use(logger('dev'));
 
-port = 3000
+port = config.port
 if process.argv.indexOf('-p') >= 0
   port = process.argv[process.argv.indexOf('-p') + 1]
 app.set('port', port)
@@ -72,4 +72,4 @@ app.get '/beed', (req, res) ->
 # Export app variable for tests
 #
 
-module.exports.getApp = app;
+module.exports = app;

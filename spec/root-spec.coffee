@@ -1,10 +1,11 @@
-request = require 'supertest'
-express = require 'express'
-app = require('../main').getApp;
+request = require 'request'
+config = require('../config/config')
 
-describe "GET /", ->
-  it "respond with json", (done) ->
-    request app
-    .get "/"
-    .expect "Content-Type", /json/
-    .expect 200, done
+baseURI = config.localhost + config.port
+
+describe 'Routes testing', ->
+  it "should respond with hello world", (done) ->
+    request "#{baseURI}/", (err, res, body) ->
+      expect(body).toEqual('{"a":"5"}')
+      done()
+
