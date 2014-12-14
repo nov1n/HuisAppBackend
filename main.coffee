@@ -25,6 +25,16 @@ app.all '*', (req, res, next) ->
   next()
 
 #
+# Routes
+#
+
+users = require './routes/users'
+houses = require './routes/houses'
+
+app.use('/users', users) # Mount the user route to /users
+app.use('/houses', houses)
+
+#
 # Server
 #
 
@@ -44,19 +54,6 @@ db.on 'error', (err) ->
   console.error("Could not connect to MongoDB: %s", err)
 db.once 'open', ->
   console.log("Connected to: mongodb://localhost/#{config.db.dev.name}")
-
-#
-# Routes
-#
-
-app.get '/', (req, res) ->
-  res.json { a: '5'}
-
-app.get '/coffee/:beep', (req, res) ->
-  res.json req.params.beep
-
-app.get '/beed', (req, res) ->
-  res.json { a: 6 }
 
 #
 # Export app variable for tests
