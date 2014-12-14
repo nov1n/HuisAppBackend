@@ -1,4 +1,6 @@
 config =
+  env:
+    'dev'
   db:
     test:
       name: 'TEST'

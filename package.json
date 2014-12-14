@@ -11,6 +11,7 @@
   "dependencies": {
     "coffee-script": "*",
     "express": "^4.10.5",
+    "express-uncapitalize": "^1.0.0",
     "mongoose": "^3.8.20",
     "morgan": "^1.5.0"
   },

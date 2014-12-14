@@ -10,25 +10,14 @@ app = express()
 
 config = require './config/config'
 
-router = express.Router() # Not used
-app.use(logger('dev'));
+app.use logger('dev')
+app.use express.static('public')
+app.use require('express-uncapitalize')() # Normalizes url by lowercasing it
 
-port = config.port
-if process.argv.indexOf('-p') >= 0
-  port = process.argv[process.argv.indexOf('-p') + 1]
-app.set('port', port)
-
-## Development only
-
-process.env.NODE_ENV = 'development'
-
-if process.env.NODE_ENV == 'development'
+if config.env == 'development'
   app.use(errorhandler()) # Returns full error stack trace to the client
 
-#
 # Allow cross-domain requests
-#
-
 app.all '*', (req, res, next) ->
   res.header('Access-Control-Allow-Origin', '*')
   res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS')
@@ -39,8 +28,8 @@ app.all '*', (req, res, next) ->
 # Server
 #
 
-app.listen app.get('port'), ->
-  console.log "Express server listening on port #{app.get 'port'} in #{app.settings.env} mode"
+app.listen config.port, ->
+  console.log "Express server listening on port #{config.port} in #{config.env} mode"
 
 #
 # Database
@@ -56,7 +45,6 @@ db.on 'error', (err) ->
 db.once 'open', ->
   console.log("Connected to: mongodb://localhost/#{config.db.dev.name}")
 
-
 #
 # Routes
 #
@@ -64,8 +52,8 @@ db.once 'open', ->
 app.get '/', (req, res) ->
   res.json { a: '5'}
 
-app.get '/coffee', (req, res) ->
-  res.json { a: 6 }
+app.get '/coffee/:beep', (req, res) ->
+  res.json req.params.beep
 
 app.get '/beed', (req, res) ->
   res.json { a: 6 }
