@@ -7,5 +7,4 @@ houseSchema = new mongoose.Schema
 
 House = mongoose.model('House', houseSchema);
 
-module.exports =
-  House: House
+module.exports = House
