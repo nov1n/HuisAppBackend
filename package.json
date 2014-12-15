@@ -13,7 +13,8 @@
     "express": "^4.10.5",
     "express-uncapitalize": "^1.0.0",
     "mongoose": "^3.8.20",
-    "morgan": "^1.5.0"
+    "morgan": "^1.5.0",
+    "underscore": "^1.7.0"
   },
   "devDependencies": {
     "jasmine": "^2.1.1",
