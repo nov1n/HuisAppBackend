@@ -1,5 +1,5 @@
 mongoose = require 'mongoose'
-User = require('../models/user').User
+User = require '../models/user'
 
 describe "User model", ->
   user = new User {
